@@ -22,12 +22,12 @@ class TS(ATR_Byte_Base):
         MSB_first = 1
     _bitorder_e: BitOrder
 
-    def __init__(self, new_bitorder: BitOrder = None) -> None:
+    def __init__(self, bitorder: BitOrder = None) -> None:
         super().__init__()
         self._a = 0b110
         self._b = 0b00
-        if new_bitorder and isinstance(new_bitorder, self.BitOrder):
-            self.bitorder = new_bitorder
+        if bitorder and isinstance(bitorder, self.BitOrder):
+            self.bitorder = bitorder
         else:
             self.bitorder = self.BitOrder.MSB_first
 
