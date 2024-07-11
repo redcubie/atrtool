@@ -44,3 +44,60 @@ class TS(ATR_Byte_Base):
             self._bitorder = 0b000
         else:
             self._bitorder = 0b111
+
+
+class T0(ATR_Byte_Base):
+    """
+    Format byte. Encodes indicator Y1 and historical byte count K.
+    """
+    _fields_ = [
+        ('_Y', ctypes.c_ubyte, 4),
+        ('_K', ctypes.c_ubyte, 4),
+    ]
+
+    def __init__(self, Y: int = None, K: int = None) -> None:
+        super().__init__()
+        if Y is not None:
+            self.Y = Y
+        if K is not None:
+            self.K = K
+
+    @property
+    def Y(self):
+        return self._Y
+
+    @Y.setter
+    def Y(self, value: int):
+        raise NotImplementedError
+    
+    def set_Y(self, TA: bool = False, TB: bool = False, TC: bool = False, TD: bool = False):
+        flags = [TA, TB, TC, TD]
+        # if any(not isinstance(x, bool) for x in (TA, TB, TC, TD)):
+        #     raise TypeError
+        for i, x in enumerate(flags):
+            if not isinstance(x, bool):
+                try:
+                    flags[i] = bool(x)
+                except:
+                    raise TypeError
+                
+        newval = 0
+        for i, x in enumerate(flags):
+            if x:
+                newval |= 1<<i
+
+        self._Y = newval
+
+    @property
+    def K(self):
+        return self._K
+    
+    @K.setter
+    def K(self, value: int):
+        if not isinstance(value, int):
+            raise TypeError
+        if not 0 <= value <= 15:
+            raise ValueError("K must be in range [0;15]")
+        
+        self._K = value
+
