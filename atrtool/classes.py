@@ -119,6 +119,17 @@ class T0(ATR_Byte_Base):
                 newval |= 1<<i
 
         self._Y = newval
+    
+    def get_Y(self) -> dict[str, bool]:
+        out = {}
+
+        val = self._Y
+
+        for i, a in enumerate(["TA", "TB", "TC", "TD"]):
+            state = (val >> i) & 1
+            out[a] = bool(state)
+
+        return out
 
     @property
     def K(self):
