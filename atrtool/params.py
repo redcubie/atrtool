@@ -124,3 +124,50 @@ class TC1(ParamByteBase):
         
         self._N = value
 
+class TA2(ParamByteBase):
+    """
+    Encodes preferred F, fmax and D values.
+    """
+    _fields_ = [
+        ('_specific_mode', ctypes.c_ubyte, 1),
+        ('_rfu', ctypes.c_ubyte, 2),
+        ('_use_param', ctypes.c_ubyte, 1),
+        ('_T', ctypes.c_ubyte, 4),
+    ]
+
+    def __init__(self, *args, **kw) -> None:
+        super().__init__(*args, **kw)
+        self._rfu = 0b00
+
+    @property
+    def specific_mode(self) -> bool:
+        return bool(self._specific_mode)
+
+    @specific_mode.setter
+    def specific_mode(self, value: bool):
+        if not isinstance(value, bool):
+            raise TypeError
+        self._specific_mode = value
+
+    @property
+    def use_param(self) -> bool:
+        return bool(self._use_param)
+
+    @use_param.setter
+    def use_param(self, value: bool):
+        if not isinstance(value, bool):
+            raise TypeError
+        self._use_param = value
+
+    @property
+    def T(self):
+        return self._T
+    
+    @T.setter
+    def T(self, value: int):
+        if not isinstance(value, int):
+            raise TypeError
+        if not 0 <= value <= 15:
+            raise ValueError("T must be in range [0;15]")
+        
+        self._T = value
