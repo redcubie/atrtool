@@ -123,3 +123,5 @@ class Teq15(ProtocolBase):
             raise ValueError
         self.infobytes[0]["TC"] = value
 
+
+PROTOLIST = {0: Teq0, 1: Teq1, 15: Teq15}
