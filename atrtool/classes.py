@@ -57,6 +57,16 @@ class TS(ATR_Byte_Base):
         else:
             raise ValueError
     
+    def check_validity(self) -> bool:
+        if self._a != 0b110:
+            return False
+        if self._b != 0b00:
+            return False
+        if self._bitorder not in (0b000, 0b111):
+            return False
+        
+        return True
+    
     @classmethod
     def from_bytes(cls, data: bytes):
         data = int(bin(int.from_bytes(data,"big"))[2:].zfill(8)[::-1], 2).to_bytes(1)
