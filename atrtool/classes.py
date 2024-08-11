@@ -27,7 +27,6 @@ class TS(ATR_Byte_Base):
     class BitOrder(Enum):
         LSB_first = 0
         MSB_first = 1
-    _bitorder_e: BitOrder
 
     def __init__(self, bitorder: BitOrder = None) -> None:
         super().__init__()
@@ -36,21 +35,37 @@ class TS(ATR_Byte_Base):
         if bitorder and isinstance(bitorder, self.BitOrder):
             self.bitorder = bitorder
         else:
-            self.bitorder = self.BitOrder.MSB_first
+            self.bitorder = self.BitOrder.LSB_first
 
     @property
     def bitorder(self):
-        return self._bitorder_e
+        if self._bitorder == 0b111:
+            return self.BitOrder.LSB_first
+        elif self._bitorder == 0b000:
+            return self.BitOrder.MSB_first
+        else:
+            raise ValueError
 
     @bitorder.setter
     def bitorder(self, value: BitOrder):
         if not isinstance(value, self.BitOrder):
             raise TypeError
-        self._bitorder_e = value
         if value == self.BitOrder.LSB_first:
+            self._bitorder = 0b111
+        elif value == self.BitOrder.MSB_first:
             self._bitorder = 0b000
         else:
-            self._bitorder = 0b111
+            raise ValueError
+    
+    @classmethod
+    def from_bytes(cls, data: bytes):
+        data = int(bin(int.from_bytes(data,"big"))[2:].zfill(8)[::-1], 2).to_bytes(1)
+        return super().from_bytes(data)
+
+    def to_bytes(self) -> bytes:
+        byte = super().to_bytes()
+        byte = int(bin(int.from_bytes(byte,"big"))[2:].zfill(8)[::-1], 2).to_bytes(1)
+        return byte
 
 
 class T0(ATR_Byte_Base):
