@@ -6,6 +6,13 @@ import struct
 class ATR_Byte_Base(ctypes.BigEndianStructure):
     def __repr__(self) -> str:
         return '{:08b}'.format(struct.unpack_from('!B', self)[0])
+    
+    @classmethod
+    def from_bytes(cls, data: bytes):
+        return cls.from_buffer_copy(data)
+
+    def to_bytes(self) -> bytes:
+        return bytes(self)
 
 class TS(ATR_Byte_Base):
     """
