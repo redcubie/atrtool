@@ -114,3 +114,10 @@ class ATR:
         assert offset == len(data)
 
         return inst
+
+def calc_TCK(ins: Iterable[int]) -> int:
+    val = 0
+    for x in ins:
+        val ^= x
+
+    return 0x00 ^ val
