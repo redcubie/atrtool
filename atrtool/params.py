@@ -103,3 +103,24 @@ class TA1(ParamByteBase):
 
         self._Di = value
 
+class TC1(ParamByteBase):
+    """
+    Encodes extra guard time needed for processing by card.
+    """
+    _fields_ = [
+        ('_N', ctypes.c_ubyte),
+    ]
+
+    @property
+    def N(self) -> int:
+        return self._N
+
+    @N.setter
+    def N(self, value: int) -> None:
+        if not isinstance(value, int):
+            raise TypeError
+        if not 0 <= value <= 255:
+            raise ValueError("N must be in range [0;255]")
+        
+        self._N = value
+
