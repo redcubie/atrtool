@@ -144,3 +144,69 @@ class T0(ATR_Byte_Base):
         
         self._K = value
 
+
+class TD(ATR_Byte_Base):
+    """
+    Format byte. Encodes indicator Y and protocol number T.
+    """
+    _fields_ = [
+        ('_Y', ctypes.c_ubyte, 4),
+        ('_T', ctypes.c_ubyte, 4),
+    ]
+
+    def __init__(self, Y: int = None, T: int = None) -> None:
+        super().__init__()
+        if Y is not None:
+            self.Y = Y
+        if T is not None:
+            self.T = T
+
+    @property
+    def Y(self):
+        return self._Y
+
+    @Y.setter
+    def Y(self, value: int):
+        raise NotImplementedError
+    
+    def set_Y(self, TA: bool = False, TB: bool = False, TC: bool = False, TD: bool = False):
+        flags = [TA, TB, TC, TD]
+        # if any(not isinstance(x, bool) for x in (TA, TB, TC, TD)):
+        #     raise TypeError
+        for i, x in enumerate(flags):
+            if not isinstance(x, bool):
+                try:
+                    flags[i] = bool(x)
+                except:
+                    raise TypeError
+                
+        newval = 0
+        for i, x in enumerate(flags):
+            if x:
+                newval |= 1<<i
+
+        self._Y = newval
+    
+    def get_Y(self) -> dict[str, bool]:
+        out = {}
+
+        val = self._Y
+
+        for i, a in enumerate(["TA", "TB", "TC", "TD"]):
+            state = (val >> i) & 1
+            out[a] = bool(state)
+
+        return out
+
+    @property
+    def T(self):
+        return self._T
+    
+    @T.setter
+    def T(self, value: int):
+        if not isinstance(value, int):
+            raise TypeError
+        if not 0 <= value <= 15:
+            raise ValueError("T must be in range [0;15]")
+        
+        self._T = value
