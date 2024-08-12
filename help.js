@@ -144,10 +144,34 @@ function protocol_collapses() {
             else {
                 collapse.hide();
             }
+
+            update_proto_list();
         });
     });
 }
 
+function update_proto_list() {
+    var protos = [
+        { "proto": 0, "check": "#Teq0_check" },
+        { "proto": 1, "check": "#Teq1_check" },
+    ];
+
+    var list_el = document.querySelector("#preferred_proto");
+    list_el.innerHTML = ""; // clear options
+
+    protos.forEach((x) => {
+        var check_el = document.querySelector(x.check);
+        var active = check_el.checked;
+
+        if (active) {
+            var el = document.createElement("option");
+            el.value = x.proto;
+            el.text = x.proto;
+
+            list_el.appendChild(el);
+        }
+    });
+}
 
 function onload() {
     populate_Fi();
