@@ -117,9 +117,7 @@ def ui_update_params():
 
     # T=15 also defines global interface characteristics
     if 15 in atr_obj.protocols:
-        prot = atr_obj.protocols[15]
-        from atrtool.protocols import Teq15
-        prot: Teq15
+        prot: Teq15 = atr_obj.protocols[15]
 
         check_el = document.querySelector("#clockstop_active")
         if prot.clock_stop is not None:
