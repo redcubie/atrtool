@@ -9,6 +9,7 @@ def ui_update_all():
     global atr_obj
     ui_update_params()
     ui_update_hist()
+    ui_update_protos()
 
 def ui_update_params():
     global atr_obj
@@ -134,3 +135,33 @@ def ui_update_hist():
         check_el.checked = False
         data_el.value = ""
     jQuery("#hist_active").trigger("change")
+
+def ui_update_protos():
+    global atr_obj
+
+    things = [
+        {"num": 0, "func": ui_update_proto_Teq0},
+        {"num": 1, "func": ui_update_proto_Teq1},
+    ]
+
+    for info in things:
+        num = info["num"]
+        func = info["func"]
+        check_sel = f"#Teq{num}_check"
+
+        check_el = document.querySelector(check_sel)
+        if num in atr_obj.protocols:
+            check_el.checked = True
+            func()
+        else:
+            check_el.checked = False
+
+        jQuery(check_sel).trigger("change")
+
+def ui_update_proto_Teq0():
+    global atr_obj
+    pass
+
+def ui_update_proto_Teq1():
+    global atr_obj
+    pass
