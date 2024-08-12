@@ -1,0 +1,10 @@
+{
+    "files": {
+        "atrtool/__init__.py": "./atrtool/__init__.py",
+        "atrtool/params.py": "./atrtool/params.py",
+        "atrtool/protocols.py": "./atrtool/protocols.py",
+        "atrtool/ATR.py": "./atrtool/ATR.py",
+        "atrtool/classes.py": "./atrtool/classes.py",
+        "web2.py": "./web2.py"
+    }
+}
