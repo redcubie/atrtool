@@ -204,3 +204,141 @@ def ui_update_proto_Teq0():
 def ui_update_proto_Teq1():
     global atr_obj
     pass
+
+
+@updater(["#bitorder"])
+def ui_rev_update_bitorder(event):
+    global atr_obj
+    el = document.querySelector("#bitorder")
+    value = el.value
+
+    if value == "normal":
+        atr_obj.TS.bitorder = TS.BitOrder.LSB_first
+    elif value == "reverse":
+        atr_obj.TS.bitorder = TS.BitOrder.MSB_first
+
+    update_text()
+
+@updater(["#params_active", "#params_Fi", "#params_Di"])
+def ui_rev_update_params(event):
+    global atr_obj
+    check_el = document.querySelector("#params_active")
+    active = check_el.checked
+
+    if active:
+        Fi_el = document.querySelector("#params_Fi")
+        Di_el = document.querySelector("#params_Di")
+
+        Fi = int(Fi_el.value)
+        Di = int(Di_el.value)
+
+        obj = TA1()
+        obj.Fi = Fi
+        obj.Di = Di
+        atr_obj.params["TA1"] = obj
+    else:
+        atr_obj.params.pop("TA1")
+
+    update_text()
+
+@updater(["#egt_active", "#egt"])
+def ui_rev_update_params(event):
+    global atr_obj
+    check_el = document.querySelector("#egt_active")
+    active = check_el.checked
+
+    if active:
+        el = document.querySelector("#egt")
+
+        val = int(el.value)
+
+        obj = TC1()
+        obj.N = val
+        # atr_obj.params.update({"TC1": obj})
+        atr_obj.params["TC1"] = obj
+    else:
+        atr_obj.params.pop("TC1")
+
+    update_text()
+
+@updater(["#negotiate_mode_active", "#negotiate_mode", "#use_speed_param", "#preferred_proto"])
+def ui_rev_update_negotiate(event):
+    global atr_obj
+    check_el = document.querySelector("#negotiate_mode_active")
+    active = check_el.checked
+
+    if active:
+        nego_el = document.querySelector("#negotiate_mode")
+        speed_el = document.querySelector("#use_speed_param")
+        proto_el = document.querySelector("#preferred_proto")
+
+        nego_val = bool(nego_el.value)
+        speed_val = bool(speed_el.value)
+        proto_val = int(proto_el.value)
+
+        obj = TA2()
+        obj.specific_mode = not nego_val
+        obj.use_param = speed_val
+        obj.T = proto_val
+        atr_obj.params["TA2"] = obj
+    else:
+        atr_obj.params.pop("TA2")
+
+    update_text()
+
+@updater(["#clockstop_active", "#clockstop", "#class_a_enable", "#class_b_enable", "#class_c_enable"])
+def ui_rev_update_Teq15(event):
+    global atr_obj
+    check_el = document.querySelector("#clockstop_active")
+    active = check_el.checked
+
+    if active:
+        clkstp_el = document.querySelector("#clockstop")
+        if clkstp_el.value == "none":
+            clockstop = Teq15.ClockStop.NOT_SUPPORTED
+        elif clkstp_el.value == "high":
+            clockstop = Teq15.ClockStop.STATE_H
+        elif clkstp_el.value == "low":
+            clockstop = Teq15.ClockStop.STATE_L
+        elif clkstp_el.value == "either":
+            clockstop = Teq15.ClockStop.NO_PREFERENCE
+        else:
+            raise ValueError
+
+        a_el = document.querySelector("#class_a_enable")
+        b_el = document.querySelector("#class_b_enable")
+        c_el = document.querySelector("#class_c_enable")
+
+        card_classes = Teq15.CardClass(0)
+        if a_el.checked:
+            card_classes |= Teq15.CardClass.CLASS_A
+        if b_el.checked:
+            card_classes |= Teq15.CardClass.CLASS_B
+        if c_el.checked:
+            card_classes |= Teq15.CardClass.CLASS_C
+        
+        obj = Teq15()
+        obj.clock_stop = clockstop
+        obj.card_class = card_classes
+        atr_obj.protocols[15] = obj
+    else:
+        atr_obj.protocols.pop(15)
+
+    update_text()
+
+@updater(["#hist_active", "#histtext"])
+def ui_rev_update_hist(event):
+    global atr_obj
+    check_el = document.querySelector("#hist_active")
+    active = check_el.checked
+
+    if active:
+        data_el = document.querySelector("#histtext")
+        
+        data = bytes.fromhex(data_el.value)
+
+        atr_obj.hist_bytes = data
+    else:
+        atr_obj.hist_bytes = b''
+
+    update_text()
