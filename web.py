@@ -38,6 +38,7 @@ def validate_text(event = None):
         textbox.classList.remove("text-bg-warning")
 
 
+apply_updaters() # add onchange functions to UI elements
 validate_text() # reset all fields based on default text
 
 #loading finished

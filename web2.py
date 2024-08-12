@@ -5,6 +5,42 @@ from atrtool import *
 
 atr_obj: ATR
 
+
+_updaters = []
+def updater(selectors: list[str]) -> callable:
+    """
+    Decorator function to gather object update listeners.
+    """
+    def add_updater(func: callable):
+        global _updaters
+
+        _updaters.append({"func": func, "selectors": selectors})
+
+        return func
+    
+    return add_updater
+
+def apply_updaters():
+    global _updaters
+
+    for info in _updaters:
+        selectors = info["selectors"]
+        func = info["func"]
+
+        for sel in selectors:
+            el = document.querySelector(sel)
+            add_event_listener(el, "change", func)
+
+
+# call from all field update handlers after modifying data structure
+def update_text():
+    global atr_obj
+    textbox = document.getElementById("hextext")
+
+    data = atr_obj.to_bytes()
+
+    textbox.value = data.hex()
+
 from js import params_changed
 def ui_update_all():
     global atr_obj
