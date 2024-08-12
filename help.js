@@ -124,12 +124,37 @@ function add_enablers() {
     });
 }
 
+function protocol_collapses() {
+    var collapse_targets = [
+        { "check": "#Teq0_check", "collapse": "#Teq0_collapse" },
+        { "check": "#Teq1_check", "collapse": "#Teq1_collapse" },
+    ];
+
+    collapse_targets.forEach((x) => {
+        $(x.check).on("change", (e) => {
+            var active = e.target.checked;
+
+            var collapse = new bootstrap.Collapse(x.collapse, {
+                toggle: false
+            });
+
+            if (active) {
+                collapse.show();
+            }
+            else {
+                collapse.hide();
+            }
+        });
+    });
+}
+
 
 function onload() {
     populate_Fi();
     populate_Di();
     add_baud_calc();
     add_enablers();
+    protocol_collapses();
 }
 
 $(window).on('load', onload);
