@@ -5,10 +5,12 @@ from atrtool import *
 
 atr_obj: ATR
 
+from js import params_changed
 def ui_update_all():
     global atr_obj
     ui_update_params()
     ui_update_hist()
+    params_changed(None) # update baud display
     ui_update_protos()
 
 def ui_update_params():
