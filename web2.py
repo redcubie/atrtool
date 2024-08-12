@@ -1,5 +1,6 @@
 from pyscript import document, window
 from js import jQuery
+from pyodide.ffi.wrappers import add_event_listener
 
 from atrtool import *
 
