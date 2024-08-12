@@ -56,10 +56,45 @@ function populate_Di() {
     });
 }
 
+function calc_baud(Fi, Di){
+    var info1 = Fi_list.find((x) => (x.val == Fi));
+    var info2 = Di_list.find((x) => (x.val == Di));
+
+    var F = info1.F;
+    var fmax = info1.fmax * 1e6;
+    var D = info2.D;
+
+    var baud = (fmax * D) / F;
+
+    return baud.toFixed(0);
+}
+
+function params_changed(ev) {
+    var Fi_el = document.getElementById("params_Fi");
+    var Di_el = document.getElementById("params_Di");
+
+    var Fi = Fi_el.value;
+    var Di = Di_el.value;
+    
+    var maxbaud = calc_baud(Fi, Di);
+
+    var text_el = document.getElementById("baud_text");
+    text_el.innerText = `${maxbaud} bits/s max`;
+}
+
+function add_baud_calc() {
+    var targets = ["#params_Fi", "#params_Di"];
+
+    targets.forEach((x) => {
+        $(x).on("change", params_changed).trigger("change");
+    });
+}
+
 
 function onload() {
     populate_Fi();
     populate_Di();
+    add_baud_calc();
 }
 
 $(window).on('load', onload);
