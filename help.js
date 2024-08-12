@@ -90,11 +90,46 @@ function add_baud_calc() {
     });
 }
 
+function add_enablers() {
+    var enable_targets =
+        [
+            { "target": "#params_active", "text": ["#params_active~.form-check-label"], "inputs": ["#params_Fi", "#params_Di"] },
+            { "target": "#egt_active", "text": ["#egt_active~.form-check-label"], "inputs": ["#egt"] },
+            { "target": "#negotiate_mode_active", "text": ["#negotiate_mode_active~.form-check-label", "#use_speed_param_active~.form-check-label", "#preferred_proto_active~.form-check-label"], "inputs": ["#negotiate_mode", "#use_speed_param", "#preferred_proto"] },
+            { "target": "#clockstop_active", "text": ["#clockstop_active~.form-check-label", "#class_active~.form-check-label"], "inputs": ["#clockstop", "#class_a_enable", "#class_b_enable", "#class_c_enable"] },
+            { "target": "#hist_active", "text": ["#hist_active~.form-check-label"], "inputs": ["#histtext"] },
+        ];
+
+    var text_disable_class = "text-disable";
+
+    enable_targets.forEach((x) => {
+        $(x.target).on("change", (e) => {
+            var active = e.target.checked;
+
+            x.text.forEach((sel) => {
+                var el = document.querySelector(sel);
+                if (!active) {
+                    el.classList.add(text_disable_class);
+                }
+                else {
+                    el.classList.remove(text_disable_class);
+                }
+            });
+
+            x.inputs.forEach((sel) => {
+                var el = document.querySelector(sel);
+                el.disabled = !active;
+            });
+        }).trigger("change");
+    });
+}
+
 
 function onload() {
     populate_Fi();
     populate_Di();
     add_baud_calc();
+    add_enablers();
 }
 
 $(window).on('load', onload);
