@@ -67,7 +67,7 @@ class Teq15(ProtocolBase):
         if "TA" not in self.infobytes[0] or self.infobytes[0]["TA"] is None:
             oldval = 0
         else:
-            oldval = self.infobytes[0]["TA"]
+            oldval = int.from_bytes(self.infobytes[0]["TA"])
 
         newval = (oldval & 0b00111111) | ((value.value & 0b11) << 6)
 
@@ -98,7 +98,7 @@ class Teq15(ProtocolBase):
         if "TA" not in self.infobytes[0] or self.infobytes[0]["TA"] is None:
             oldval = 0
         else:
-            oldval = self.infobytes[0]["TA"]
+            oldval = int.from_bytes(self.infobytes[0]["TA"])
 
         newval = (oldval & 0b11000000) | (value.value & 0b00111111)
 
