@@ -340,3 +340,37 @@ def ui_rev_update_hist(event):
         atr_obj.hist_bytes = b''
 
     update_text()
+
+@updater(["#Teq0_check"])
+def ui_rev_update_Teq0(event):
+    global atr_obj
+    check_el = document.querySelector("#Teq0_check")
+    active = check_el.checked
+
+    if active:
+        obj = Teq0()
+
+        pass
+
+        atr_obj.protocols[0] = obj
+    else:
+        atr_obj.protocols.pop(0)
+
+    update_text()
+
+@updater(["#Teq1_check"])
+def ui_rev_update_Teq1(event):
+    global atr_obj
+    check_el = document.querySelector("#Teq1_check")
+    active = check_el.checked
+
+    if active:
+        obj = Teq1()
+
+        pass
+
+        atr_obj.protocols[1] = obj
+    else:
+        atr_obj.protocols.pop(1)
+
+    update_text()
