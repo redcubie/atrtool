@@ -151,13 +151,13 @@ class TA2(ParamByteBase):
 
     @property
     def use_param(self) -> bool:
-        return bool(self._use_param)
+        return not bool(self._use_param)
 
     @use_param.setter
     def use_param(self, value: bool):
         if not isinstance(value, bool):
             raise TypeError
-        self._use_param = value
+        self._use_param = not value
 
     @property
     def T(self):
