@@ -197,7 +197,21 @@ def ui_update_protos():
 
 def ui_update_proto_Teq0():
     global atr_obj
-    pass
+    prot: Teq0 = atr_obj.protocols[0]
+
+    check_el = document.querySelector("#Teq0_wti_active")
+    wti_el = document.querySelector("#Teq0_wti")
+    if prot.waiting_time is not None:
+        check_el.checked = True
+
+        wti_el.value = prot.waiting_time
+    else:
+        check_el.checked = False
+
+        # reset data to default value
+        wti_el.value = 10
+    
+    jQuery("#Teq0_wti_active").trigger("change")
 
 def ui_update_proto_Teq1():
     global atr_obj
@@ -341,7 +355,7 @@ def ui_rev_update_hist(event):
 
     update_text()
 
-@updater(["#Teq0_check"])
+@updater(["#Teq0_check", "#Teq0_wti_active", "#Teq0_wti"])
 def ui_rev_update_Teq0(event):
     global atr_obj
     check_el = document.querySelector("#Teq0_check")
@@ -350,7 +364,11 @@ def ui_rev_update_Teq0(event):
     if active:
         obj = Teq0()
 
-        pass
+        check_el = document.querySelector("#Teq0_wti_active")
+        if check_el.checked:
+            wti_el = document.querySelector("#Teq0_wti")
+
+            obj.waiting_time = int(wti_el.value)
 
         atr_obj.protocols[0] = obj
     else:

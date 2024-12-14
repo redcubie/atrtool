@@ -98,6 +98,7 @@ function add_enablers() {
             { "target": "#negotiate_mode_active", "text": ["#negotiate_mode_active~.form-check-label", "#use_speed_param_active~.form-check-label", "#preferred_proto_active~.form-check-label"], "inputs": ["#negotiate_mode", "#use_speed_param", "#preferred_proto"] },
             { "target": "#clockstop_active", "text": ["#clockstop_active~.form-check-label", "#class_active~.form-check-label"], "inputs": ["#clockstop", "#class_a_enable", "#class_b_enable", "#class_c_enable"] },
             { "target": "#hist_active", "text": ["#hist_active~.form-check-label"], "inputs": ["#histtext"] },
+            { "target": "#Teq0_wti_active", "text": ["#Teq0_wti_active~.form-check-label"], "inputs": ["#Teq0_wti"] },
         ];
 
     var text_disable_class = "text-disable";
