@@ -21,6 +21,7 @@ and then open <http://localhost:8000> in a browser.
 
 ## TODO
 
-- [ ] add protocol-specific parameters
+- [x] ~~add protocol-specific parameters~~
+- [ ] add historical bytes handling
 - [ ] add presets
 - [ ] write documentation
