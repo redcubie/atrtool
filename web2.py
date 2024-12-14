@@ -215,7 +215,58 @@ def ui_update_proto_Teq0():
 
 def ui_update_proto_Teq1():
     global atr_obj
-    pass
+    prot: Teq1 = atr_obj.protocols[1]
+
+    check_el = document.querySelector("#Teq1_ifsc_active")
+    ifsc_el = document.querySelector("#Teq1_ifsc")
+    if prot.ifs_max_size is not None:
+        check_el.checked = True
+
+        ifsc_el.value = prot.ifs_max_size
+    else:
+        check_el.checked = False
+
+        # reset data to default value
+        ifsc_el.value = 32
+    
+    jQuery("#Teq1_ifsc_active").trigger("change")
+
+
+    check_el = document.querySelector("#Teq1_cwi_active")
+    cwi_el = document.querySelector("#Teq1_cwi")
+    bwi_el = document.querySelector("#Teq1_bwi")
+    if prot.character_wait_time is not None:
+        check_el.checked = True
+
+        cwi_el.value = prot.character_wait_time
+        bwi_el.value = prot.block_wait_time
+    else:
+        check_el.checked = False
+
+        # reset data to default value
+        cwi_el.value = 13
+        bwi_el.value = 4
+    
+    jQuery("#Teq1_cwi_active").trigger("change")
+
+
+    check_el = document.querySelector("#Teq1_redundancy_active")
+    redundancy_el = document.querySelector("#Teq1_redundancy")
+    if prot.ifs_max_size is not None:
+        check_el.checked = True
+
+        redundancy = prot.redundancy
+        if redundancy == Teq1.RedundancyCode.LRC:
+            redundancy_el.value = "lrc"
+        elif redundancy == Teq1.RedundancyCode.CRC:
+            redundancy_el.value = "crc"
+    else:
+        check_el.checked = False
+
+        # reset data to default value
+        redundancy_el.value = "lrc"
+
+    jQuery("#Teq1_redundancy_active").trigger("change")
 
 
 @updater(["#bitorder"])
@@ -376,7 +427,7 @@ def ui_rev_update_Teq0(event):
 
     update_text()
 
-@updater(["#Teq1_check"])
+@updater(["#Teq1_check", "#Teq1_ifsc_active", "#Teq1_ifsc", "#Teq1_cwi_active", "#Teq1_cwi", "#Teq1_bwi_active", "#Teq1_bwi", "#Teq1_redundancy_active", "#Teq1_redundancy"])
 def ui_rev_update_Teq1(event):
     global atr_obj
     check_el = document.querySelector("#Teq1_check")
@@ -384,8 +435,35 @@ def ui_rev_update_Teq1(event):
 
     if active:
         obj = Teq1()
+        
+        check_el = document.querySelector("#Teq1_ifsc_active")
+        if check_el.checked:
+            ifsc_el = document.querySelector("#Teq1_ifsc")
 
-        pass
+            obj.ifs_max_size = int(ifsc_el.value)
+
+        
+        check_el = document.querySelector("#Teq1_cwi_active")
+        if check_el.checked:
+            cwi_el = document.querySelector("#Teq1_cwi")
+            bwi_el = document.querySelector("#Teq1_bwi")
+
+            obj.character_wait_time = int(cwi_el.value)
+            obj.block_wait_time = int(bwi_el.value)
+
+
+        check_el = document.querySelector("#Teq1_redundancy_active")
+        if check_el.checked:
+            redundancy_el = document.querySelector("#Teq1_redundancy")
+
+            if redundancy_el.value == "lrc":
+                redundancy = Teq1.RedundancyCode.LRC
+            elif redundancy_el.value == "crc":
+                redundancy = Teq1.RedundancyCode.CRC
+            else:
+                raise ValueError
+            
+            obj.redundancy = redundancy
 
         atr_obj.protocols[1] = obj
     else:

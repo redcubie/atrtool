@@ -286,8 +286,53 @@
                     </div>
                     <div class="row-cols-1 collapse mb-3" id="Teq1_collapse">
                         <div class="card card-body">
-                            Some placeholder content for the collapse component. This panel is hidden by default but
-                            revealed when the user activates the relevant trigger.
+                            <div class="row mb-3 align-items-center g-3">
+                                <div class="col-auto">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="Teq1_ifsc_active">
+                                        <label for="Teq1_ifsc_active" class="form-check-label ">Max IFS field size:</label>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="number" id="Teq1_ifsc" value="32" min="1" max="254" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mb-1 align-items-center g-3">
+                                <div class="col-auto">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="Teq1_cwi_active">
+                                        <label for="Teq1_cwi_active" class="form-check-label ">Character wait time:</label>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="number" id="Teq1_cwi" value="13" min="0" max="15" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row mb-3 align-items-center g-3">
+                                <div class="col-auto">
+                                    <div class="form-check">
+                                        <input type="checkbox" aria-hidden="true" style="visibility: hidden;" class="form-check-input" id="Teq1_bwi_active">
+                                        <label for="Teq1_cwi_active" class="form-check-label ">Block wait time:</label>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="number" id="Teq1_bwi" value="4" min="0" max="9" class="form-control">
+                                </div>
+                            </div> 
+                            <div class="row mb-1 align-items-center g-3">
+                                <div class="col-auto">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="Teq1_redundancy_active">
+                                        <label for="Teq1_redundancy_active" class="form-check-label ">Redundancy code:</label>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <select id="Teq1_redundancy" class="form-select">
+                                        <option value="lrc">LRC</option>
+                                        <option value="crc">CRC</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>

@@ -99,6 +99,9 @@ function add_enablers() {
             { "target": "#clockstop_active", "text": ["#clockstop_active~.form-check-label", "#class_active~.form-check-label"], "inputs": ["#clockstop", "#class_a_enable", "#class_b_enable", "#class_c_enable"] },
             { "target": "#hist_active", "text": ["#hist_active~.form-check-label"], "inputs": ["#histtext"] },
             { "target": "#Teq0_wti_active", "text": ["#Teq0_wti_active~.form-check-label"], "inputs": ["#Teq0_wti"] },
+            { "target": "#Teq1_ifsc_active", "text": ["#Teq1_ifsc_active~.form-check-label"], "inputs": ["#Teq1_ifsc"] },
+            { "target": "#Teq1_cwi_active", "text": ["#Teq1_cwi_active~.form-check-label", "#Teq1_bwi_active~.form-check-label"], "inputs": ["#Teq1_cwi", "#Teq1_bwi"] },
+            { "target": "#Teq1_redundancy_active", "text": ["#Teq1_redundancy_active~.form-check-label"], "inputs": ["#Teq1_redundancy"] },
         ];
 
     var text_disable_class = "text-disable";
