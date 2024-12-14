@@ -272,7 +272,7 @@ def ui_rev_update_negotiate(event):
 
         nego_val = bool(nego_el.value)
         speed_val = bool(speed_el.value)
-        proto_val = int(proto_el.value)
+        proto_val = int(proto_el.value or '0')
 
         obj = TA2()
         obj.specific_mode = not nego_val
