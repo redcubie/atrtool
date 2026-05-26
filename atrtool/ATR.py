@@ -74,7 +74,7 @@ class ATR:
                 proto_inst = PROTOLIST[proto]()
                 inst.protocols[proto] = proto_inst
 
-        proto_iters = {}
+        proto_iters = {x: 0 for x in inst.protocols.keys()}
         TD_available = bytes_available["TD"]
         while TD_available:
             byte = data[offset:offset+1]
